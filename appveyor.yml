@@ -1,26 +1,48 @@
-version: 1.0.{build}
+branches:
+  only:
+    - master
 
-environment:
-    COVERALLS_REPO_TOKEN: 
-      secure: eeeee
-    
+version: 1.0.{build}-rc
+
+
+configuration: Debug
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+
+cache:
+  - packages
+
+
+nuget:
+  disable_publish_on_pr: true
+  
 install:
     - cd MiniParser_ParserCombinators
     - nuget restore
 
     
 before_build:
-    - pwd
-    - dir
+    - ps: pwd
+    - ps: dir
      
 build:
   project: MiniParser_ParserCombinators.sln
 #  verbosity: minimal
   verbosity: detailed
 
+ 
 
-#after_test: 
-#    - packages\OpenCover.4.5.3522\OpenCover.Console.exe -register:user -filter:"+[StatePrinter]*" -target:"packages\NUnit.Runners.2.6.4\tools\nunit-console.exe" -targetargs:"StatePrinter.Tests\bin\debug\StatePrinter.Tests.dll /domain:single /noshadow" -output:"coverage.xml"
+  before_deploy:
+    - cd coveralls.net\package
+    - nuget pack coveralls.net.nuspec -Version "%APPVEYOR_BUILD_VERSION%"
+    - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
-#    - packages\coveralls.io.1.1.86\tools\coveralls.net.exe --opencover "coverage.xml"
-    
+  deploy:
+  - provider: NuGet
+    api_key:
+      secure: 2fcbcVHpBbBN9Q9vnWfQaWBpTn0H/5Y10cBMVD1XJuJv5Tcyvcr63lsdAMHJyg61 
