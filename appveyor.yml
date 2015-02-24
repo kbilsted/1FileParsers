@@ -7,11 +7,15 @@ environment:
 install:
     - cd MiniParser_ParserCombinators
     - nuget restore
+
     
+before_build:
+    - cd MiniParser_ParserCombinators
+     
 build:
   project: MiniParser_ParserCombinators.sln
-  verbosity: minimal
-#  verbosity: detailed
+#  verbosity: minimal
+  verbosity: detailed
 
 
 #after_test: 
