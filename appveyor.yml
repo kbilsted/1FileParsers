@@ -10,7 +10,8 @@ install:
 
     
 before_build:
-    - cd MiniParser_ParserCombinators
+    - pwd
+    - dir
      
 build:
   project: MiniParser_ParserCombinators.sln
