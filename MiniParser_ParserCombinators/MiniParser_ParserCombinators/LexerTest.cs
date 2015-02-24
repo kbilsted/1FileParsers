@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using NUnit.Framework;
 
@@ -37,7 +39,7 @@ namespace MiniParser_ParserCombinators.Test
     public void Lex2()
     {
       var cfg = new ActParserCfg();
-      Lexer l = new Lexer(cfg.GetLexingTokens(),cfg.LexerTokenPredicate);
+      Lexer l = new Lexer(cfg.GetLexingTokens(), cfg.LexerTokenPredicate);
       var res = l.Lex("a -> b.c; root -> * ; root ->{a,b}", 1).ToList();
 
       int i = 0;
@@ -65,30 +67,6 @@ namespace MiniParser_ParserCombinators.Test
       Assert.AreEqual(res.Count, i);
     }
 
-    //[Test]
-    //public void Lex2_stateprinter()
-    //{
-    //  var cfg = new ActParserCfg();
-    //  Lexer l = new Lexer(cfg.GetLexingTokens(), cfg.LexerTokenPredicate);
-    //  var res = l.Lex("a -> b.c; root -> * ; root ->{a,b}", 1).ToList();
-
-    //  //var configuration = ConfigurationHelper.GetStandardConfiguration();
-    //  //configuration.Add(
-    //  //  new ProjectionHarvester()
-    //  //  .Include<IdentifiedToken>(x => x.Id)
-    //  //  .Include<IdentifiedToken>(x => x.Content));
-      
-    //  var configuration = ConfigurationHelper.GetStandardConfiguration();
-    //  configuration.Add(
-    //    new ProjectionHarvester()
-    //    .Include<IdentifiedToken>(x => x.Id, x => x.Content));
-
-    //  var stateprinter = new Stateprinter(configuration);
-
-    //  Console.WriteLine(stateprinter.PrintObject(res));
-    //}
-
-
 
     [Test]
     public void LexWikiExamples()
@@ -105,8 +83,54 @@ namespace MiniParser_ParserCombinators.Test
       Assert.AreEqual("c", res[i++].Content);
       Assert.AreEqual(";", res[i++].Id);
       Assert.AreEqual(res.Count, i);
+    }
 
+    [Test]
+    public void LexWikiExamplesStatePrinter()
+    {
+        var cfg = new ActParserCfg();
+        Lexer l = new Lexer(cfg.GetLexingTokens(), cfg.LexerTokenPredicate);
+
+        string expected = @"new List<IdentifiedToken>()
+[0] = new IdentifiedToken()
+{
+    Id = ""Name""
+    Content = ""a""
+}
+[1] = new IdentifiedToken()
+{
+    Id = ""@>""
+    Content = ""@>""
+}
+[2] = new IdentifiedToken()
+{
+    Id = ""Name""
+    Content = ""c""
+}
+[3] = new IdentifiedToken()
+{
+    Id = "";""
+    Content = "";""
+}
+";
+
+        var printer = Get.Printer();
+        printer.Configuration.Projectionharvester()
+            .Include<IdentifiedToken>(x => x.Id, x => x.Content);
+
+        printer.Assert.PrintIsSame(expected, l.Lex("a@>c;", 1).ToList());
     }
 
   }
+
+    static class Get {
+        public static Stateprinter Printer() {
+            var printer = new Stateprinter();
+            printer.Configuration.SetAreEqualsMethod (Assert.AreEqual);
+            printer.Configuration.Culture = CultureInfo.GetCultureInfo("da-DK");
+
+            return printer;
+        }
+    }
+
 }
