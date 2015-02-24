@@ -9,7 +9,7 @@ install:
     - nuget restore
     
 build:
-  project: MiniParser_ParserCombinators\MiniParser_ParserCombinators.sln
+  project: MiniParser_ParserCombinators.sln
   verbosity: minimal
 #  verbosity: detailed
 
