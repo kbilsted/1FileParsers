@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>ParserCombinator</id>
+    <version>0.0</version>
+    <authors>Kasper B. Graversen</authors>
+    <owners>Kasper B. Graversen</owners>
+    <licenseUrl>https://raw.githubusercontent.com/kbilsted/1FileParsers/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/kbilsted/1FileParsers</projectUrl>
+    <iconUrl></iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>...</releaseNotes>
+    <copyright>Copyright 2014-2015</copyright>
+    <tags>Parsing Lexing ParserCombinator Parser Lexer</tags>
+  </metadata>
+</package>
