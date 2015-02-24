@@ -5,6 +5,7 @@ environment:
       secure: eeeee
     
 install:
+    - cd MiniParser_ParserCombinators
     - nuget restore
     
 build:
