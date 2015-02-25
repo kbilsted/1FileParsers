@@ -22,7 +22,6 @@ nuget:
   disable_publish_on_pr: true
   
 install:
-    - cd MiniParser_ParserCombinators
     - nuget restore
 
     
@@ -31,12 +30,11 @@ before_build:
      
 build:
   project: MiniParser_ParserCombinators.sln
-#  verbosity: minimal
-  verbosity: detailed
+  verbosity: minimal
+#  verbosity: detailed
  
 
 before_deploy:
-  - cd coveralls.net\package
   - nuget pack MiniParser_ParserCombinators.nuspec -Version "%APPVEYOR_BUILD_VERSION%"
   - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
