@@ -2,7 +2,7 @@ branches:
   only:
     - master
 
-version: 1.0.{build}-rc
+version: 0.1.{build}-rc
 
 
 configuration: Debug
@@ -42,3 +42,4 @@ deploy:
   - provider: NuGet
     api_key:
       secure: iilt+MH/q6fzDsdRndFHjE9WawMnZAiGfcNfeRYf90R0Q2e50nUM8SZMfW2xgvBm
+    skip_symbols: false
