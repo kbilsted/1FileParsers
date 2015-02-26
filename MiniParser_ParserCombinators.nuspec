@@ -7,9 +7,9 @@
     <owners>Kasper B. Graversen</owners>
     <licenseUrl>https://raw.githubusercontent.com/kbilsted/1FileParsers/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/kbilsted/1FileParsers</projectUrl>
-    <iconUrl></iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>...</releaseNotes>
+    <description>...</description>
+    <releaseNotes>...</releaseNotes>
     <copyright>Copyright 2014-2015</copyright>
     <tags>Parsing Lexing ParserCombinator Parser Lexer</tags>
   </metadata>
